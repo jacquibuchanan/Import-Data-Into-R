@@ -1,0 +1,47 @@
+---
+title: "Socrata / Factor Lab"
+author: "Jacqui Buchanan"
+date: "February 20, 2016"
+output: html_document
+---
+### This tutorial demonstrates the procedure for reading in open data files from Socrata, a privately-held cloud software company that works to provide cloud storage for local & state governments and drive data-driven decicion making.
+
+#### First I'll walk through the steps needed to read in a file from Socrata using the Open Data API, then I'll talk about factors. 
+
+```{r}
+
+# Socrata has a special package called "RSocrata" that allows you to read its files in more easily.
+
+# install.packages("RSocrata")
+library(RSocrata)
+
+# The read.socrata( ) function works very similar to to the read.csv( ) function, but has a special way that it reads in dates so that they're not classified as factors.
+
+# First, navigate to the data set you want to download. We'll use 311 calls about abandoned cars in Chicago for this example.
+
+# You want to look for the tool bar on the upper right (the colorful one) and click on 'Export' which will give you a few options below. Click on SODA API and then copy the API Endpoint. This is the url that you're going to insert into the read.socrata( ) function.
+
+dat.cars <- read.socrata("https://data.cityofchicago.org/resource/3c9v-pnva.csv")
+View( dat.cars )
+class( dat.cars$Creation.Date )
+
+# As you can see, the dates are read in as the date/time classes POSIXlt and POSIXt instead of as factors. From here you can do what you want with the data! 
+
+# Example of what not to do: 
+
+bad.dat.cars <- read.csv( "https://data.cityofchicago.org/resource/3c9v-pnva.csv" )
+View( bad.dat.cars )
+class( bad.dat.cars$Creation.Date )
+
+# https://data.cityofchicago.org/api/views/3c9v-pnva/rows.csv?accessType=DOWNLOAD
+
+# Dates = factors, oh no! Avoid the headache, use the read.socrata( ) function. 
+# Also, Professor.... for some reason when I used read.csv() it dropped a majority of the observations... why would this happen? It had the same number of variables, but was missing all of the observations.
+
+
+
+
+
+
+```
+
