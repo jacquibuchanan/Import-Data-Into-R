@@ -1,0 +1,107 @@
+---
+title: "Factor Lab"
+author: "Jacqui Buchanan"
+date: "February 25, 2016"
+output: html_document
+---
+
+### FACTORS.
+
+
+##### Factors are one of the four primary "classes" in R, and are categories that represent groups within your data.
+
+##### It may seem like factors are redundant when you can numerically create levels (for example instead of casting "treatment" and "control" as factors, we could assign 1=treatment and 0=control), factors are useful because they save memory and increase processing speed. 
+
+##### Factors also take advantage of R's object-oriented'ness, and lets you perform analysis by groups more easily.
+
+##### Important note: Factors canNOT be directly re-cast from numeric. You have to cast them as a character, and then as a number.
+
+```{r}
+x <- as.factor(c(9,9,9,11,10,12,12,12,10,10,11,12))
+x
+class(x)
+as.numeric(x)
+x
+```
+
+##### Oh no! We've totally lost the original x.
+
+```{r}
+x <- as.factor(c(9,9,9,11,10,12,12,12,10,10,11,12))
+x
+x2 <- as.numeric(as.character(x))
+x2
+```
+
+##### Sometimes (as we all know from the first semester), R is sneaky and through a function will turn one data class into another. 
+
+##### An example of this is the cut function, c( ), which is used to convert a numeric variable into a factor. 
+
+##### The breaks= argument to cut is used to describe how ranges of numbers will be converted to factor values.
+
+##### If a number is provided through the breaks= argument, the resulting factor will be created by dividing the range of the variable into that number of equal length intervals; if a vector of values is provided, the values in the vector are used to determine the breakpoint.
+
+##### Here's an example: 
+
+```{r}
+y <- 1:12
+new.y <- cut( y, breaks=3, labels=NULL )
+new.y
+class(new.y)
+```
+
+##### As you can see, new.y has been changed to a factor because it was divided into groups with the cut function. This is problematic if we want to perform any mathematical functions using new.y.
+
+```{r}
+this.ex <- new.y*3
+this.ex
+```
+
+##### So take care if you're using cut or other functions that group, and make sure you either want your data in factor form, or you re-cast it at some point.
+
+```{r}
+data("warpbreaks")
+
+levels( warpbreaks$tension )
+
+summary( warpbreaks$tension )
+
+```
+
+##### R is grouping the wool tension by these levels (low, medium, high).  Internally, R stores the integer values like this: 1=L, 2=M, and 3=H.  
+
+##### If we do a summary of this variable, R tallies each category (see above). For factors like this, R won’t let us do a mean or any other statistic of a factor variable other than a count. 
+
+
+### I'm sure there are many more frustrating (read:useful) ways to use factors, this was just the tip of the iceberg. Enjoy!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
